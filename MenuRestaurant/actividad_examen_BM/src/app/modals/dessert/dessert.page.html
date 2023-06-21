@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-title  ><b>Desserts デザート</b></ion-title>
+    <ion-buttons slot="end">
+      <ion-button  (click)="closeModal();">
+        <ion-icon name="close-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <img src="../../../assets/img/mochis.jpg" alt="" width="100%" srcset="">
+
+  <h2 class="ion-text-center" *ngIf="desserts.length == 0">
+    <h2>There's nothing here yet  :(</h2>
+    <h5>ここにはまだ何もありません :(</h5> 
+  </h2>
+
+  <ion-list>
+    <ion-item *ngFor="let dessert of desserts">
+      <ion-button class="botones" color="light">
+        <ion-label>
+          <ion-grid>
+            <ion-row>
+              <ion-col><h1><b>----------  オプション  ----------</b></h1></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col><h1><b>{{dessert.nombre}}</b></h1></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>{{dessert.subnombre}} </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col><h2><b>${{dessert.precio}} </b></h2></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="ion-text-center"> 
+                <ion-button color="primary" (click)="editar_dessert(dessert);" >
+                  EDIT
+                </ion-button>
+                <ion-button color="success" (click)="mostrar_dessert(dessert);" >
+                  SHOW MORE
+                </ion-button>
+                <ion-button color="danger" (click)="borrar_dessert(dessert);" >
+                  DELETE
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-label>
+      </ion-button>
+    
+    </ion-item>
+    
+  </ion-list>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="dark" class="ion-text-end">
+    <ion-button color="light" (click)="new_dessert();">
+      <ion-icon name="add-outline"></ion-icon>Add
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

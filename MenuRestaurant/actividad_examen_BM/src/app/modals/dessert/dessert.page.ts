@@ -1,0 +1,378 @@
+import { Component, OnInit } from '@angular/core';
+import { AlertController, ModalController } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
+import { ToastController } from '@ionic/angular';
+import Swal from 'sweetalert2';
+
+
+@Component({
+  selector: 'app-dessert',
+  templateUrl: './dessert.page.html',
+  styleUrls: ['./dessert.page.scss'],
+})
+export class DessertPage implements OnInit {
+
+  desserts=[]
+
+  constructor(
+    private http : HttpClient,
+    public alertController: AlertController,
+    public modalController: ModalController,
+    private toastCtrl : ToastController
+  ) { }
+
+  ngOnInit() {
+    this.loadDesserts();
+  }
+
+  closeModal(){
+    this.modalController.dismiss();
+  }
+
+  loadDesserts(){
+    
+    this.http.get<any>('http://localhost/ACTIVIDAD_EXAMEN_7_TERM/actividad_examen_BEM/back_end_moviles/tablas/api/Dessert')
+    .subscribe(response => {
+        this.desserts  = response.data;
+      console.log(response);
+    }); 
+
+  }
+
+  async mostrar_alerta(titulo, mensaje, posicion, color){
+    let toast = await this.toastCtrl.create({
+      header : titulo,
+      message : mensaje,
+      color : color,
+      position : posicion,
+      duration : 2500
+    });
+
+    await toast.present();
+  }
+
+
+  async new_dessert(){
+    const alert = await this.alertController.create({
+      header : "ADD",
+      inputs : [
+        
+        {
+          name : "nombre",
+          type : "text",
+          placeholder : "Name"
+        },
+
+        {
+          name : "subnombre",
+          type : "text",
+          placeholder : "Sub nombre"
+        },
+
+        {
+          name : "precio",
+          type : "number",
+          placeholder : "Price"
+        },
+        {
+          name : "descripcion",
+          type : "textarea",
+          placeholder : "Descripcion"
+        },
+
+        
+        
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'danger',
+          
+        }, {
+          text: 'Guardar',
+          cssClass: 'primary',
+          handler : (data) => {
+            //console.log(data);
+            console.log(data);
+            this.http.post<any>(
+              "http://localhost/ACTIVIDAD_EXAMEN_7_TERM/actividad_examen_BEM/back_end_moviles/tablas/api/Dessert",
+              data
+            ).subscribe(response => {
+
+              if (response.status == "1") {
+              
+                //this.mostrar_alerta("the item has been added successfully","", "middle", "success");
+                
+                Swal.fire({
+                  title:"",
+                  icon:"success",
+                  padding: "1em",
+                  text: "the item has been added successfully",
+                  background: "#000",
+                  //grow: "fullscreen",
+                  backdrop: false,
+                  footer: "",
+                  timer: 5000,
+                  //timerProgressBar: true,
+                  //toast: true,
+                 }
+                );
+                
+                this.loadDesserts();
+              
+              }else{
+
+                Swal.fire({
+                  title:"",
+                  icon:"error",
+                  padding: "1em",
+                  text: "Error adding",
+                  background: "#000",
+                  //grow: "fullscreen",
+                  backdrop: false,
+                  footer: "",
+                  timer: 5000,
+                  //timerProgressBar: true,
+                  //toast: true,
+                 }
+                );
+                
+              }
+              console.log(response);
+              },error => {
+                Swal.fire({
+                  title:"",
+                  icon:"error",
+                  padding: "1em",
+                  text: "Error adding",
+                  background: "#000",
+                  //grow: "fullscreen",
+                  backdrop: false,
+                  footer: "",
+                  timer: 5000,
+                  //timerProgressBar: true,
+                  //toast: true,
+                 }
+                );
+                console.log("error");
+                
+            }); 
+        
+          }
+        },
+        
+
+      ]
+
+
+    });
+    await alert.present();
+  }
+
+
+  
+  
+  async editar_dessert(dessert){
+    const alert = await this.alertController.create({
+      header : "Edit",
+      inputs : [
+        
+        {
+          name : "nombre",
+          type : "text",
+          placeholder : "Name",
+          value : dessert.nombre
+        },
+
+        {
+          name : "subnombre",
+          type : "textarea",
+          placeholder : "sub nombre",
+          value : dessert.subnombre
+        },
+
+        {
+          name : "precio",
+          type : "number",
+          placeholder : "Price",
+          value : dessert.precio
+        },
+
+        {
+          name : "descripcion",
+          type : "textarea",
+          placeholder : "Descripcion",
+          value : dessert.descripcion
+        },
+        
+        
+        
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'danger',
+          
+        }, {
+          text: 'Guardar',
+          cssClass: 'primary',
+          handler : (data) => {
+            //console.log(data);
+            console.log(data);
+            this.http.put<any>(
+              "http://localhost/ACTIVIDAD_EXAMEN_7_TERM/actividad_examen_BEM/back_end_moviles/tablas/api/Dessert/id/"+dessert.id,
+              data
+            ).subscribe(response => {
+
+              if (response.status == "1") {
+                Swal.fire({
+                  title:"",
+                  icon:"success",
+                  padding: "1em",
+                  text: "the item has been edited successfully",
+                  background: "#000",
+                  //grow: "fullscreen",
+                  backdrop: false,
+                  footer: "",
+                  timer: 5000,
+                  //timerProgressBar: true,
+                  //toast: true,
+                 }
+                );
+                this.loadDesserts();
+              
+              }else{
+                Swal.fire({
+                  title:"",
+                  icon:"error",
+                  padding: "1em",
+                  text: "Error while editing",
+                  background: "#000",
+                  //grow: "fullscreen",
+                  backdrop: false,
+                  footer: "",
+                  timer: 5000,
+                  //timerProgressBar: true,
+                  //toast: true,
+                 }
+                );
+                
+              }
+              console.log(response);
+              },error => {
+                Swal.fire({
+                  title:"",
+                  icon:"error",
+                  padding: "1em",
+                  text: "Error while editing",
+                  background: "#000",
+                  //grow: "fullscreen",
+                  backdrop: false,
+                  footer: "",
+                  timer: 5000,
+                  //timerProgressBar: true,
+                  //toast: true,
+                 }
+                );
+                console.log("error");
+                
+            }); 
+        
+          }
+        },
+
+      ]
+
+
+    });
+    await alert.present();
+  }
+
+  async mostrar_dessert(dessert){
+    const alert = await this.alertController.create({
+      header : "Description",
+      message: dessert.descripcion,
+      buttons: [
+
+        {
+          text: 'OK',
+          role: 'cancel',
+          cssClass: 'success',
+          
+        }, 
+      ]
+
+    });
+    await alert.present();
+  }
+
+
+  async borrar_dessert(dessert){
+    const alert = await this.alertController.create({
+      header : "Do you want erase?",
+      inputs : [
+        
+      ],
+      buttons: [
+        {
+          text: 'NO',
+          role: 'cancel',
+          cssClass: 'danger',
+          
+        }, 
+        {
+          text: 'YES',
+          cssClass: 'danger',
+          handler : (data)=> {
+            console.log(2);
+            this.http.delete<any>(
+              "http://localhost/ACTIVIDAD_EXAMEN_7_TERM/actividad_examen_BEM/back_end_moviles/tablas/api/Dessert/id/"+dessert.id,
+            ).subscribe(response => {
+
+              if (response.status == "1") {
+                //Swal.fire("","the item has been deleted successfully","success");
+                Swal.fire({
+                  title:"",
+                  icon:"success",
+                  padding: "1em",
+                  text: "the item has been deleted successfully",
+                  background: "#000",
+                  //grow: "fullscreen",
+                  backdrop: false,
+                  footer: "",
+                  timer: 5000,
+                  //timerProgressBar: true,
+                  //toast: true,
+
+                 }
+                );
+                this.loadDesserts();
+              
+              }else{
+                Swal.fire("","Error when deleting","error");
+                
+              }
+              console.log(response);
+              },error => {
+                Swal.fire("","Error when deleting","error");
+                console.log("error");
+                
+            });
+          }
+          
+        },
+
+      ]
+
+
+    });
+    await alert.present();
+  }
+
+
+
+
+  
+}

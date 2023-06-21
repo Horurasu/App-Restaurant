@@ -1,0 +1,94 @@
+<ion-header [translucent]="true" class="fondos">
+  <ion-toolbar color="danger">
+    <ion-title class="ion-text-center" >
+      <h2>メニュー</h2>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button  (click)="cargar_login();">
+        <ion-icon name="home-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" >
+  
+
+  <img src="../../assets/img/ramenimagen.png" alt="" width="100%" height="50%"  srcset="">
+  
+  <section height="50%">
+    <ion-button expand="block" (click)="cargar_ramen();"  size="large">
+      <ion-grid>
+        <ion-row>
+         <ion-col class="ion-text-start">
+           RAMEN 拉麺
+         </ion-col>
+         <ion-col class="ion-text-end">
+          <ion-icon name="caret-forward-outline"></ion-icon>
+        </ion-col>
+        </ion-row>
+       </ion-grid>
+    </ion-button>
+    <ion-button expand="block" (click)="cargar_sushi();" size="large">
+      <ion-grid>
+        <ion-row>
+         <ion-col class="ion-text-start">
+           SUSHI すし
+         </ion-col>
+         <ion-col class="ion-text-end">
+          <ion-icon name="caret-forward-outline"></ion-icon>
+        </ion-col>
+        </ion-row>
+       </ion-grid>
+    </ion-button>
+    <ion-button expand="block" (click)="cargar_bebida();" size="large">
+      <ion-grid>
+        <ion-row>
+         <ion-col class="ion-text-start">
+           DRINKS 飲料
+         </ion-col>
+         <ion-col class="ion-text-end">
+          <ion-icon name="caret-forward-outline"></ion-icon>
+        </ion-col>
+        </ion-row>
+       </ion-grid>
+    </ion-button>
+    <ion-button expand="block" (click)="cargar_postre();" size="large">
+      <ion-grid>
+        <ion-row>
+         <ion-col class="ion-text-start">
+           DESSERTS デザート
+         </ion-col>
+         <ion-col class="ion-text-end">
+          <ion-icon name="caret-forward-outline"></ion-icon>
+        </ion-col>
+        </ion-row>
+       </ion-grid>
+    </ion-button>
+    <ion-button expand="block" (click)="cargar_extra();" size="large">
+      <ion-grid>
+        <ion-row>
+         <ion-col class="ion-text-start">
+           EXTRAS 追加の特徴
+         </ion-col>
+         <ion-col class="ion-text-end">
+          <ion-icon name="caret-forward-outline"></ion-icon>
+        </ion-col>
+        </ion-row>
+       </ion-grid>
+    </ion-button>
+   
+  </section>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="danger" class="ion-text-start" class="fondos">
+    <ion-title >どうぞお召し上がりください    .</ion-title>
+  </ion-toolbar>
+</ion-footer>
+
+
+
+

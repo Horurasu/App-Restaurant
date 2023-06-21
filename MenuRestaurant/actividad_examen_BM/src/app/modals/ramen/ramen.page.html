@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-title  ><b>Ramen 拉麺</b></ion-title>
+    <ion-buttons slot="end">
+      <ion-button  (click)="closeModal();">
+        <ion-icon name="close-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+  
+<ion-content>
+
+  <img src="../../../assets/img/descargar.jpg" alt="" width="100%" srcset="">
+
+
+  <h2 class="ion-text-center" *ngIf="ramens.length == 0">
+    <h2>There's nothing here yet  :(</h2>
+    <h5>ここにはまだ何もありません :(</h5> 
+  </h2>
+
+
+  <ion-list>
+        <ion-item *ngFor="let ramen of ramens">
+          <ion-button class="botones" color="light">
+            <ion-label>
+              <ion-grid>
+                <ion-row>
+                  <ion-col><h1><b>----------  オプション  ----------</b></h1></ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col><h1><b>{{ramen.nombre}}</b></h1></ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>{{ramen.subnombre}} </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col><h2><b>${{ramen.precio}} </b></h2></ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="ion-text-center"> 
+                    <ion-button color="primary" (click)="editar_ramen(ramen);" >
+                      EDIT
+                    </ion-button>
+                    <ion-button color="success" (click)="mostrar_ramen(ramen);" >
+                      SHOW MORE
+                    </ion-button>
+                    <ion-button color="danger" (click)="borrar_ramen(ramen);" >
+                      DELETE
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-label>
+          </ion-button>
+        
+        </ion-item>
+        
+  </ion-list>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="dark" class="ion-text-end">
+    <ion-button color="light" (click)="new_ramen();">
+      <ion-icon name="add-outline"></ion-icon>Add
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
